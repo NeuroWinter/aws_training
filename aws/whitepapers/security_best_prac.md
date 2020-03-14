@@ -149,7 +149,7 @@ You can break up the creation of an ISMS into several steps:
     * This is the account that you create when you first sign up to AWS and this has root 
 permissions to all AWS services.
 
-    There are different account strategies to maximise your security:
+    * There are different account strategies to maximise your security:
         1. Single Account.
             * Minimal overhead.
         2. Prod, Dev, Test Accounts.

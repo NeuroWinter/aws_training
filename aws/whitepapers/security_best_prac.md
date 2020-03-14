@@ -142,3 +142,32 @@ You can break up the creation of an ISMS into several steps:
 8. Get management approval
 9. Statement of applicability
 
+
+# Managing AWS Accounts, IAM users Groups and Roles.
+
+- AWS Account.
+    * This is the account that you create when you first sign up to AWS and this has root 
+permissions to all AWS services.
+
+    There are different account strategies to maximise your security:
+        1. Single Account.
+            * Minimal overhead.
+        2. Prod, Dev, Test Accounts.
+            * Create 3 AWS accounts.
+        3. Create an Account for each part of your business.
+            * This can be per application or by department.
+        4. Central Security with accounts for each part of business.
+            * Here we create a central AWS account that controls security, things like DNS and
+            AD. Then create accounts per application or department.
+- IAM users.
+    * IAM users are what you will use for your day to day interactions with AWS, each one has
+    its own security credentials and are all controlled under a single AWS account. It is best
+    practice to create an IAM user for each person or service that needs access to AWS. Then
+    create tight controls in the AWS Account and apply them to the groups or users.
+
+- IAM Groups.
+    * IAM Groups are just a collection of IAM users in the same AWS account. 
+    * You can apply a set of IAM Policies to a group.
+    * All IAM Users in an IAM Groups will inherit all policies applied to that group.
+    * It is best practice to great groups to provide users with access to AWS services.
+

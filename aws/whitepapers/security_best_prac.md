@@ -30,9 +30,6 @@
 - Availability Zones are designed to be fault tolerant.
 - You are responsible for choosing the AZs in the same region
 
-
-
-
 ## The different Layers of the security model.
 
 ### Infrastructure Services
@@ -83,6 +80,11 @@ You are responsible for setting up and managing network level access and access 
 - EMR
 - Elastic Beanstalk
 
+An Example of the shared responsibility model here is RDS, AWS looks after the backup and
+recovery but you need to make sure your DR is up to scratch.
+
+In this section you are responsible for data and firewall access too.
+
 ### Abstracted Services
 AWS manages the platform and the underlying platform and exposes services via an API.
 Meaning that the underlying infrastructure is shared but it is a multi tenanted system, with
@@ -92,4 +94,33 @@ secure data isolation.
 - DynamoDB
 - SQS
 - SES
+
+Abstracted assets are closly tied to IAM, meaning that it is up to you to make sure all your
+assets are taged correctly and you have the correct access groups set up. Theses access groups
+can be either at the user or the service level.
+
+For some of the abstracted services you are also responsiable for ensuring encryption at rest
+and in transit, like S3, where you need to enable HTTPS and encrypt the buckets themselves.
+
+## Trust Validator tool.
+
+AWS provides a tool that will check a few security best practices like checking open ports on 
+EC2 instances, and that IAM and MFA are enabled.
+
+## Designing an ISMS
+
+Remeber that an ISMS is an Information Security Management System, the main goal of this is to
+protect what matters most to you, and your company. To create an ISMS we need to identify what
+has the most value to you.
+
+There are two types of accests: 
+- Essential elements:
+-- Business information.
+-- Process.
+-- Activities.
+- Support:
+-- Hardware.
+-- Software.
+-- Personal.
+-- Partner Organizations
 

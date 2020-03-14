@@ -114,15 +114,15 @@ protect what matters most to you, and your company. To create an ISMS we need to
 has the most value to you.
 
 There are two types of assets: 
-    Essential elements:
-        Business information.
-        Process.
-        Activities.
-    Support:
-        Hardware.
-        Software.
-        Personal.
-        Partner Organizations
+1. Essential elements:
+  * Business information.
+  * Process.
+  * Activities.
+2. Support:
+  * Hardware.
+  * Software.
+  * Personal.
+  * Partner Organizations.
 
 Once you have categorised your assets into classes, work out the $ value of each of those
 and what AWS services they depend on. This will better inform your decisions on creating a

@@ -109,18 +109,36 @@ EC2 instances, and that IAM and MFA are enabled.
 
 ## Designing an ISMS
 
-Remeber that an ISMS is an Information Security Management System, the main goal of this is to
+Remember that an ISMS is an Information Security Management System, the main goal of this is to
 protect what matters most to you, and your company. To create an ISMS we need to identify what
 has the most value to you.
 
-There are two types of accests: 
-- Essential elements:
--- Business information.
--- Process.
--- Activities.
-- Support:
--- Hardware.
--- Software.
--- Personal.
--- Partner Organizations
+There are two types of assets: 
+    Essential elements:
+        Business information.
+        Process.
+        Activities.
+    Support:
+        Hardware.
+        Software.
+        Personal.
+        Partner Organizations
+
+Once you have categorised your assets into classes, work out the $ value of each of those
+and what AWS services they depend on. This will better inform your decisions on creating a
+standard for monitoring, and operating your ISMS on AWS.
+
+Since Businesses change all the time it is a good idea to review this regally so that the
+ISMS keeps in-line with the business.
+
+You can break up the creation of an ISMS into several steps:
+1. Define the scope
+2. Define an ISMS policy
+3. Select a risk assessment methodology.
+4. Identify risks
+5. Analyse risks
+6. Address risks
+7. Choose a Sec framework
+8. Get management approval
+9. Statement of applicability
 

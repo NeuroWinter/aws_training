@@ -171,3 +171,31 @@ permissions to all AWS services.
     * All IAM Users in an IAM Groups will inherit all policies applied to that group.
     * It is best practice to great groups to provide users with access to AWS services.
 
+## Delegating IAM roles and temp security credentials.
+
+There are a few scenarios where you might want users or services that do not have AWS access
+to use AWS services.
+
+1. Application running on EC2 needs to write to S3.
+2. Cross AWS Account access - Dev user needs to start a deployment in prod
+3. Identify federation - AD users need AWS rights too.
+
+IAM Roles and Temporary credentials will solve these use cases. 
+
+IAM Roles allows you to give an AWS user/service rights to access some AWS service. To do this
+the item (user/service) needs to assume the role in code, this will provide the requester with
+temporary access to the AWS service that the role provides. These will have a exp time and will
+automatically rotate. The benefits of this that you will not need to manage long term access
+to AWS services.
+
+## IAM Roles for EC2
+
+Basicly an admin can create an EC2 role for an aplication to access particular AWS resources.
+This means that the application running on an EC2 instance has access, and the Developer does
+not need access themselves. This also lets the adming give very fine grained access to only
+the resources that the application needs.
+
+PIC HERE
+
+
+

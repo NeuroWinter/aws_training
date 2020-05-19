@@ -4,4 +4,7 @@
 * EBS  = Elastic Block Store
 * VPC  = Virtual Private Cloud
 * AZ   = Availability Zones
+* HSM  = Hardware Security Modules
+* DRM  = Digital Rights Management
+* PKI  = Public Key Infrastructure 
 

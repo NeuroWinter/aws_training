@@ -190,12 +190,107 @@ to AWS services.
 
 ## IAM Roles for EC2
 
-Basicly an admin can create an EC2 role for an aplication to access particular AWS resources.
+Basically an admin can create an EC2 role for an application to access particular AWS resources.
 This means that the application running on an EC2 instance has access, and the Developer does
-not need access themselves. This also lets the adming give very fine grained access to only
+not need access themselves. This also lets the admin give very fine grained access to only
 the resources that the application needs.
 
 PIC HERE
 
+## Cross-Account Access
+
+The main idea to this is that you can allow another account to access resources from one account
+from another account. 
+
+## Identity Federation
+
+### Managing OS-level Access to Amazon EC2 Instances
+
+In the Shared Responsibility model you own the OS credentials, however AWS provides ways to help
+you set it up in the 1st place.
+
+When you 1st create an EC2 instance from a stander AMI you are given the ssh or the RDP
+credentials. Once you have initially authenticated you are then able to change the password to
+whatever you like. 
+
+AWS also provides asymmetric key pairs, these are not related to an AWS account or and IAM User,
+and can be used on multiple EC2 instances. You can also opt to generate you own key pairs and 
+upload only the public key to AWS. 
+
+If you decided to let AWS generate your key pairs when you create the pairs initially you will be
+prompted to download the public and the private key. AWS will not store the private key and if
+you loose it you must generate a new pair.
+
+Also remember that if you need you can disable the AWS EC2 pairs and implement your own auth.
+
+
+# Secure Your Data
+
+## Resource Access Authorization
+
+There are two types of resource access:
+- Resource policies.
+    - These are where a particular user controls the resource and can give access to other users
+    - The root AWS account always has complete access to all resources created under its account.
+- Capability policies (user-based permissions).
+    - This is where an IAM user has access directly or indirectly to a resource via IAM polices, either on the user itself or on a group a user is part of.
+    - These can override resource policies.
+
+## Storing and Managing Encryption Keys in the Cloud
+
+WOW There is so much here I need to revisit .....
+
+## Protecting Data at Rest
+
+There are several threats that we need to think about here:
+
+1. Accidental information disclosure.
+1. Data integrity compromise.
+1. Accidental deletion.
+1. System, infra, hardware of software availability.
+
+Here are AWS's solutions to those problems:
+
+1. Accidental information disclosure.
+    - Make data confidential and limit the number of users that have access to it 
+    - Use encryption on EBS and RDS.
+1. Data integrity compromise.
+    - Limit the number of users that can access and modify the data, LEAST PRIVILEGED!!!
+    - Perform data integrity checks and restore if there is a compromise.
+1. Accidental deletion.
+    - LEAST PRIVILEGED!
+    - Enable MFA on delete.
+    - Data integrity checks from above.
+1. System, infra, hardware of software availability. 
+    - Ensure that there is multiple AZs for your applications and their data.
+
+Now lets look at some of the services AWS provides and the options they provide for protecting your data!
+
+### S3
+- Permissions:
+    - There is bucket level and object level permissions along with IAM policies for creating, modifying and deleting data.
+- Versioning:
+    - While it is supported, it is disabled by default.
+- Replication:
+    - Every object in S3 is replicated across all AZs within the region.
+    - How ever when something is deleted it will replicate across all AZs.
+    - You can opt of reduced redundancy, for a lower cost.
+- Backup:
+    - This is not provided by AWS but you can implement this yourself.
+- Encryption - Server side:
+    - Supported but needs to be explicitly enabled.
+    - Each object is encrypted with its own key and is encrypted with AES-256 the key itself is then encrypted with an AES-256 master key - This is all transparent to the user.
+    - AWS manages the keys and they are rotated on a regular basis.
+- Encryption - Client side:
+    - You encrypt the data with whatever key and algo you want, AWS doesn't care and will have no idea if anything is encrypted or not.
+### EBS
+
+### RDS
+
+### S3 Glacier
+
+### DynamoDB
+
+### EMR
 
 

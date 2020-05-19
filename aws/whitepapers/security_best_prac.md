@@ -284,6 +284,28 @@ Now lets look at some of the services AWS provides and the options they provide 
 - Encryption - Client side:
     - You encrypt the data with whatever key and algo you want, AWS doesn't care and will have no idea if anything is encrypted or not.
 ### EBS
+- Replication:
+    - AWS will create two copies of your EBS volume, but these will be in the same AZ, so are susceptible to prolonged outages and disasters.
+    - This is only really for hardware failure.
+- Backup:
+    - AWS can create snapshots of your volume.
+- Encryption - Windows EFS:
+    - If you are running a Windows server you can enable EFS
+    - You can control your own EFS keys
+- Encryption - Microsoft:
+    - You can use Bitlocker on a Windows server
+    - Bitlocker uses AES 128 and 256.
+    - This requires a TPM to store keys and is *NOT* supported by EC2.
+    - EBS can use Bitlocker if you configure it to use a password and not a TPM.
+- Encryption - Linux dm-crypt:
+    - If your Linux version is running kernel version 2.6 or later you can use sm-crypt.
+    - This is transparent data encryption on EBS and in SWAP.
+    - LUKS is supported.
+- Encryption - TrueCrypt:
+    - This is a third-party tool that can be used.
+- Encryption and Integrity authentication - SafeNet ProtectV:
+    - Another third-party tool.
+    - Provides full disk encryption and pre-boot auth.
 
 ### RDS
 

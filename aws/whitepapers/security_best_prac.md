@@ -1,6 +1,6 @@
 # Shared Responsibility model
 - AWS customers are responsible for their own security.
-- AWS provides a secure infrustructure but you need to secure the data, Systems and platforms
+- AWS provides a secure infrastructure but you need to secure the data, Systems and platforms
 - IAM lets you manage users and user permissions.
 - For EC2 as an example you need to look after the following:
     - AMIs
@@ -15,12 +15,12 @@
     - Facilities
     - Physical security of hardware
     - Network infrastructure
-    - Virtualization infrastructure
+    - Virtualisation infrastructure
 
 # AWS Global Secure Infrastructure
 
 ## IAM
-- Used to create and manage users access to console and api.
+- Used to create and manage users access to console and API.
 
 ### Regions, Availability Zones, and Endpoints
 - Regions manage country regulations.
@@ -55,26 +55,26 @@ In this model you own the access rights to your EC2 instances, but AWS helps you
 access controls. They will provide you with your initial passwords and access to an EC2
 instance or AMI image, and it is up to you to change these passwords.
 
-Authention to EC2 instances are provided by AWS, using asymmetric key pairs, a.k.a Amazon
-EC2 key pairs. Each user can have multiple EC2 keypairs, however these are not tied to the IAM
+Authentication to EC2 instances are provided by AWS, using asymmetric key pairs, a.k.a Amazon
+EC2 key pairs. Each user can have multiple EC2 key pairs, however these are not tied to the IAM
 users or AWS at all. An EC2 key pair will only provide access to that single EC2 instance, and
 no other AWS services. 
 You can use your own generator like openSSH to generate these key pairs, or you can use AWS.
 If you use AWS, they will not store the private key for you, and it is up to you to securely
 store it.
 
-When you create an EC2 linux instance using the cloud-init service the public key will be added to
+When you create an EC2 Linux instance using the cloud-init service the public key will be added to
 the servers ~/.ssh/authorized_keys file, allowing you to ssh into the instance using the
 private key.
 
 When you create an EC2 Windows instance, then the admin password is encrypted with the public
-key, a user can then request the password using the aws cli or management console, providing
+key, a user can then request the password using the AWS cli or management console, providing
 the private key for decryption. 
 
 All of this can be disabled of course.
 
 ### Container Services
-These normally run on EC2 but you dont always manage the EC2.
+These normally run on EC2 but you don't always manage the EC2.
 You are responsible for setting up and managing network level access and access management. 
 - RDS
 - EMR
@@ -95,11 +95,11 @@ secure data isolation.
 - SQS
 - SES
 
-Abstracted assets are closly tied to IAM, meaning that it is up to you to make sure all your
-assets are taged correctly and you have the correct access groups set up. Theses access groups
+Abstracted assets are closely tied to IAM, meaning that it is up to you to make sure all your
+assets are tagged correctly and you have the correct access groups set up. Theses access groups
 can be either at the user or the service level.
 
-For some of the abstracted services you are also responsiable for ensuring encryption at rest
+For some of the abstracted services you are also responsible for ensuring encryption at rest
 and in transit, like S3, where you need to enable HTTPS and encrypt the buckets themselves.
 
 ## Trust Validator tool.

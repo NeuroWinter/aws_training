@@ -308,6 +308,12 @@ Now lets look at some of the services AWS provides and the options they provide 
     - Provides full disk encryption and pre-boot auth.
 
 ### RDS
+You can use RDS without implementing further security features, as it is as secure as the underlying EC2 security. However if you need to to store things encrypted at rest you will need to add protection at the application level.
+One option for this is MySQL/Oracle cryptographic functions.
+There are some caveats to this though, like range functions will not work on keys that are encrypted.
+If you are using Oracle you can use Transparent Data Encryption and the Native Network Encryption.
+Transparent Data Encryption encrypts data before it is stored, and decrypts it when it is read.
+Transparent Data Encryption can encrypt table spaces or columns using AWS and Triple DES.
 
 ### S3 Glacier
 

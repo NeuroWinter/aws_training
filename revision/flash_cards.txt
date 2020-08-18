@@ -1,0 +1,270 @@
+Which AWS service enables you to monitor the CPU utilization of your Amazon EC2 instance?
+    Amazon CloudWatch
+
+What is an Amazon Elastic Block Storage (Amazon EBS) optimized instance?
+    An instance that uses an optimized configuration stack and provides additional, dedicated
+    capacity for Amazon EBS I/O. This optimization provides the best performance for your
+    EBS volumes by minimizing contention between Amazon EBS I/O and other traffic from your
+    instance.
+
+Which section of the AWS Elastic Beanstalk configuration file allows for the configuration of
+the environment and AWS resources in it?
+    Resources section
+
+What is an Amazon Cognito user pool?
+    A user directory in Cognito. Users can sign in to your web or mobile app through Cognito.
+    Users can also sign in through social identity providers, such as Facebook or Amazon,
+    and through SAML identity providers. Whether users sign in directly or through a third
+    party, all members of the user pool have a directory profile that you can access through
+    an AWS software development kit (AWS SDK).
+
+Are you able to use AWS Microsoft AD with your existing on-premise implementation of
+Microsoft Active Directory?
+    Yes
+
+Which serverless AWS services can function as the business or application tier?
+    Amazon API Gateway and AWS Lambda
+
+#### MY STUFF FROM HERE ####
+
+### EBS
+
+Using a GP2 EBS volume what is the min and max size
+    1GB to 16TB
+
+How many IOPS do you get per gb on GP2?
+    3 IOPS per GB 
+    With a max of 16000 IPPS when you get to 5.3 TB you are at the max.
+    Small GP2 volumes can burst up to 3000 IOPS
+
+What is an example usecase for the IO1 EBS volume type?
+    Critical Business apps like Large DB workloads.
+
+What is the min and max size of IO1 EBS volumes?
+    4GB to 16TB
+
+What is the min and max IOPS for IO1?
+    This is called PIOPS (provisioned IOPS).
+    Min == 100
+    Max == 32000 for most instances and 64000 for NITRO.
+    There is a max ratio of 50 to 1 IOPS per GB,
+    So if I have a 10GB volume the max IOPS I can get is 500
+
+What is a use case for ST1 EBS volume type?
+    Big Data, Data warehousing and log processing.
+    Its got a LOT of throughput per second.
+
+What is the min and max size of ST1 EBS volumes?
+    Min == 500GB
+    Max == 16TB
+
+What is the max IOPS for ST1 EBS volume?
+    500 IOPS
+
+What is a use case for SC1 EBS volumes?
+    This is where you need super cheap storage, for data that is not accessed
+    frequently, like a file server.
+    Its similar to ST1 but lower IOPS and throughput.
+
+Name all the EBS volume types that can be boot volumes.
+    GP2, IO1, Magnetic (This is legacy)
+
+Give a quick overview of what EBS is.
+    EBS is a network drive attached to your EC2 instance, it is AZ bound.
+    EBS volumes are persistent so the data will remain if you delete your EC2
+    instance. You can also increase the size of them.
+
+How are you billed for EBS.
+    You are billed on the size and IOPS not how much you use.
+
+How do you migrate a EBS volume to another AZ?
+    You will need to create a snapshot and then restore from that snapshot to
+    another AZ.
+
+### EC2 Instance Store.
+
+What is an EC2 Instance store?
+    This is like a physical drive attached to your EC2 Instance.
+    It is SUPER high IOPS since its physical, 100,000+ IOPS
+    They are NOT backed up you will need to do this manually!
+
+What is the max size of an EC2 Instance Store?
+    7.5TB or stripped up to 40TB
+    However you cant resize the size.
+
+When will the data on the Instance Store get deleted?
+    The underlying disk drive fails
+    The instance stops
+    The instance terminates
+
+What are some use cases for EC2 Instance Stores?
+    There is no network latency but it is ephemeral, so good for on host
+    caching, or temporary data.
+
+### EFS
+
+What OS can use EFS?
+    You can only use EFS on Linux based OS.
+
+How are you billed for EFS?
+    You are only billed on what you use.
+
+What is a use case for EFS.
+    Since EFS is not AZ bound you can use it to share data between different EC2
+    instances.
+    Use cases are Web serving, CMS or data sharing.
+
+What are some of the benefits and draw backs for EFS?
+    EFS is not AZ bound and can share data between EC2 Instances.
+    You only pay for what you use.
+    You can scale up to the petabytes of data.
+    It is around 3 times the cost of EBS
+
+What protocol does EFS use?
+    NFSv4.1
+    You will need to ensure that this is enabled in your Security Group.
+
+What are the Performance classes for EFS.
+    General purpose - good for Webserver
+    Max I/O - good for big data and media processing.
+
+What is one way you can reduce the cost of EFS?
+    You can use Life cycle management (move file after X days)
+    This will move a file from the standard storage tier to Infrequent
+    access (EFS-IA). (EFS-IA) is cold storage, where it is super cheap to
+    store, but you are charged to access it.
+
+What do you do if you EC2 instance cannot connect to the EFS volume?
+    Check that you have enabled NFS in your security groups.
+
+### ELBS
+
+What are the types of ELBS and what protocols do they support?
+    Classic (CLB)     - HTTP, HTTPS, TCP (Layer 4 and 7)
+    Application (ALB) - HTTP, HTTPS, Websockets (Layer 7 only)
+    Network (NLB)     - TCP, TLS, UDP (Layer 4)
+
+What does it mean when the ELB gets a 503 error?
+    This means that the ELB is at capacity, It cannot find a healthy server to
+    send the request to.
+
+How does the ELB evaluate the health of a server?
+    It will send a request to the heath endpoint, if it returns a 200 (OK), then
+    the host is healthy, if it returns anything else its not.
+
+If the ELB cannot connect to the  EC2 instances what should you check?
+    This is normally a security group issue, make sure that the EC2 instance is
+    accepting traffic from the ELBs security group.
+
+What are some of the advantages of ALB over CLB?
+    It supports redirects.
+    It can balance multiple http apps across machines.
+    Support load balancing to multiple apps on the same machine.
+    This means its great to use ALB when you have micro services.
+    You can set up heaps of different rules to route traffic based on things.
+
+What is ALB Route routing?
+    This is where a request will be routed to a different server/port based on
+    something like the URL entered or the subdomain of the url.
+    Or something like the query string or headers in the request.
+
+What are the different types of ALB target groups?
+    EC2 instance.
+    ECS Tasks.
+    Lambda function.
+    Private IP.
+
+What header is the clients original IP in?
+    X-Forwarded-For, The port and the protocol is in the
+    X-Fowarded-(Port and Proto)
+
+Can you use Elastic IPs on a ALB?
+    No to use EIPs you will need to use a NLB.
+
+How many IPS does a NLB get?
+    It will get one per AZ.
+
+What are the 2 types of target groups for NLB?
+    Instance
+    IP
+
+In what situations do you want to use NLB over ALB?
+    When you want extreme performance and want a static IP per AZ.
+
+What is Load Balancer Stickyness?
+    This is where a client will connect to the same instance for each request.
+
+When would you use Load Balancer Stickyness?
+    When you need to make sure that the user does not loose its session data.
+
+What are some of the draw backs when using Load Balancer Stickyness?
+    It will introduce imbalance to the target instances.
+
+Which LBs can use Stickyness?
+    Only the CLB and ALB
+
+What is Cross Zone Load Balancing?
+    This is where each LB in each AZ can route traffic to any EC2 instance in
+    any AZ.
+
+Which LBs can use Cross Zone Load Balancing?
+    All LB can use it, it is enabled by default and cannot be turned off for
+    ALBs You can enable it on CLB and it is free. On NLBs it is disabled by
+    default, and will cost.
+
+What is SNI and what problem does it solve.
+    SNI is Server Name Identification, it solves the problem of having multiple
+    SSL certs on a single load balancer. 
+
+What Load Balancers support SNI?
+    SNI is only supported on ALB and NLB NOT CLB!
+
+What is the other name for ELB connection draining, and what is it?
+    Deregistration delay. This is the amount of time that the ELB will let
+    requests finish on a server that is deemed unhealthy.
+
+When would you change the default ELB connection draining time?
+    The default is 300 seconds, and you would change it if your processing time
+    for a request exceed  this normally.
+
+### ASG ###
+
+What is an auto scaling group?
+    An Auto Scaling Group is a set of rules that define how your scale out or
+    scale in based on load or some other metric.
+
+What is an ASG made up of?
+    A Launch config,
+        AMI + Instance Type
+        EC2 User Data
+        EBS Volumes
+        Security Groups
+        SSH Key Pair
+    Min/Max size, Network and subnet info, LB info, and Scaling Policies.
+
+What happens if you attach an IAM role to the ASG?
+    This IAM role will be applied to all EC2 instances launched by it.
+
+How does the ASG know what instances to terminate?
+    The ASG will terminate any instances that are reported to be unhealthy by
+    the LB
+
+What is one benefit of using a launch template over a launch configuration?
+    With a template you can define a fleet of instances so you can launch
+    different EC2 instance types and you can use spot instances.
+
+What are the 3 different Scaling policies?
+    Target, This is where you can define a target like average CPU usage to be
+    40%, the ASG will launch and remove instances to try reach this target.
+    Simple/Step, this is where you can scale by X based on a cloudwatch alarm,
+    this lets you add and remove X instances when the alarm is in the alarm 
+    state, and remove X when it is not.
+    Scheduled, this is where you can add or remove instances at a particular
+    time.
+
+What is Scale CoolDown?
+    This is the period that the ASG will wait between events to add or remove
+    instances, with a shorter period you can save money as it will remove
+    instances quicker.
+
+

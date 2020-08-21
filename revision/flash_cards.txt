@@ -267,4 +267,170 @@ What is Scale CoolDown?
     instances, with a shorter period you can save money as it will remove
     instances quicker.
 
+### RDS ###
 
+What Database technologies are supported by AWS?
+    Postgres, MySQL, MariaDB, Oracle, Microsoft SQL Server, Aurora.
+
+What are some of the benefits of using RDS over hosting your own DB on EC2?
+    Automated provisioning and OS updates.
+    Automatic Backups.
+    Monitoring Dashboards out of the box.
+    Read Replicas.
+    MultiAZ support.
+    Vertical and horizontal scaling.
+
+What EBS volumes are used by RDS?
+    Either GP2 or IO1
+
+How would you go about sshing into the RDS servers?
+    This is not possible as it is an AWS managed service..
+
+You don't want to create a new DB user for each member of the DEV team, how do
+you give them access to the database?
+    This can be done by enabling IAM authentication for RDS, and making sure
+    that they have the right IAM permissions.
+
+How is point in time restore implemented in RDS?
+    There is a daily DB backup during the maintainice  window, and the
+    Transactional logs are backed up every 5 min.
+
+Your RDS backup policy is set to the default 7 days, however you want to retain
+a single backup for 35 days, how would you do this?
+    You should create a manual backup by creating a snapshot of the DB.
+
+What SQL command is used to create READ replicas?
+    ASYNC, this means that the read replicas will be eventually consistent with
+    the master node.
+
+What is normal use case for using Read Replicas?
+    You have a reporting dashboard that will make a lot of SELECT queries to the
+    DB, and you don't want to impact your master DB. 
+
+You read online that you can only host read replicas in the same AZ, is this
+True?
+    No Read Replicas can be hosted either the same AZ, cross AZ or cross Region.
+
+What considerations do you need to think about when hosting a read replica in a
+different AZ?
+    Since the replica is in a different AZ then there will be a cross AZ network
+    cost.
+
+What are some of the benefits of having a multi AZ deployment of RDS?
+    A multi AZ deployment increases availability as if there is an issue with
+    the master node then AWS will automatically fail over connections, to the
+    salve. Our database will be behind a single DNS name and AWS will handle the
+    rest.
+
+You have a RDS domain that is not encrypted at rest, you want to fix this,
+how would you go about it?
+    Create a snapshot of the current domain, and restore the snapshot to an
+    encrypted domain.
+
+What are some benefits of using IAM authentication?
+    All traffic to and from the DB is encrypted using SSL.
+    You can leverage IAM roles to give granular access.
+    The access token will only last for 15min
+
+With RDS, what are your responsibilities?
+    Inbound Security group rules
+    Creating and managing DB users either in DB or using IAM
+    Enforcing SSL and all the parameter groups for the instance.
+
+With RDS, what are AWS responsibilities?
+    Making sure there is no SSH
+    DB and OS patching
+    Making sure there is no access to the underlying instance.
+
+What is DB technologies does Aurora support?
+    MySQL and Postgres.
+
+What is the max size of Aurora and what is the max size of RDS?
+    Aurora is 64TB and RDS is 32TB
+
+Give a brief over view of Aurora.
+    Aurora has a scaling data storage layer where each piece of data is
+    replicated 6 times across 3 AZs. There is a singe write node and up to 16
+    read replicas per region. 
+
+How do clients talk to an Aurora DB?
+    There is a DNS record for both the reader and writer. The DNS record is
+    updated when a new writer is promoted. The reader endpoint is a load
+    balancer.
+
+What DNS setting do you need to check when using Aurora?
+    Make sure that the TTL for the DNS record for Aurora is short.
+
+What are some of the main features of Aurora?
+    Auto Failover.
+    Auto backup.
+    Isolation.
+    Auto 0 time patching.
+    Restore to any point of time.
+
+What are the 4 different Aurora launch types and their benefits?
+    One writer multiple readers - general purpose.
+    One writer multiple readers - when you want to make sure you reporting or 
+        analytics does not degrade your writer.
+    Multiple writers - when your application is writing a lot.
+    Serverless - when your workload is unpredictable.
+
+How can you tell the difference between reader and writer Aurora endpoints?
+    The Reader will have "-ro" in the endpoint name.
+
+What is different between Aurora and Aurora Serverless?
+    Aurora serverless will create db instances for you and auto scale on load.
+
+What is a good use case for Aurora Serverless?
+    When your db access is infrequent intermittent or unpredictable.
+
+What is the underlying change to implement a global Aurora DB?
+    Having Read Replicas spread out across regions. This means that if there is
+    a disaster on one region then you can promote a reader in one region to a 
+    writer.
+
+
+### CLI SDK IAM roles and Policies ###
+
+What order does the CLI look for credentials?
+    Command line options
+    Environment Variables
+    credentials file
+    Config file
+    container credentials
+    instance profiles
+
+What order does the Java SDK look for credentials in?
+    Environment variables.
+    Java system properties
+    default credential profiles file
+    Container credentials
+    instance profile credentials
+
+How can you use MFA in the AWS CLI?
+    You will need to call the aws sts get-session-token command with the arn
+    of your MFA device and the code from it.
+
+If you get intermittent errors from API rate limits what should you do?
+    Implement exponential Back off.
+
+What do you do if you get consistent API rate limit errors?
+    Request an increase of your service limits.
+
+What is SigV4?
+    This is how your requests to AWS are signed with your credentials.
+
+What are the two ways of using SigV4?
+    Http/s header options
+    Query string.
+
+How do you get the instance ID of your EC2 machine programmatically?
+    Query the instance MetaData using the 169.254.169.254 ip.
+
+What language does the AWS CLI use?
+    Python.
+
+When using the SDK on an EC2 instance how does it get the right credentials?
+    It queries the Meta data and gets temporary creds.
+
+    

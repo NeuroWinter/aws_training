@@ -389,6 +389,31 @@ What is the underlying change to implement a global Aurora DB?
     a disaster on one region then you can promote a reader in one region to a 
     writer.
 
+### S3 ###
+
+What are the 4 different types of encryption for S3?
+    SSE-S3
+    SSE-KMS
+    SSE-C
+    Client side encryption
+
+What protocol must you send your data over when using SSE-C and why?
+    You need to use HTTPS since you are sending private data.
+
+When you enable versioning on an already existing bucket what version ID do the
+current files get?
+    Null
+
+You already have a bucket then you enable encryption do the existing files get encrypted?
+    No.
+
+To enable S3 MFA delete what must you first enable?
+    Versioning.
+
+What account can enable S3 MFA-Delete?
+    Only the root account.
+
+
 
 ### CLI SDK IAM roles and Policies ###
 
@@ -433,4 +458,7 @@ What language does the AWS CLI use?
 When using the SDK on an EC2 instance how does it get the right credentials?
     It queries the Meta data and gets temporary creds.
 
-    
+What is the priority in the CLI credentials chain?
+    Command line options, environment variables, EC2 instance Profile. 
+
+    face
